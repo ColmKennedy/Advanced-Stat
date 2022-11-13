@@ -1,0 +1,151 @@
+<!-- Instructions: This is the template you will use to type up your responses to the exercises and the on your own questions. To produce a document that you can print out and turn in just click on Knit HTML above. All you need to do to complete the lab is to type up your BRIEF answers and the R code (when necessary) in the spaces provided below. If you want to find out more about the markdown language click on the MD icon. -->
+
+Lab 9
+========================================================
+
+#### Author: Colm Kennedy
+
+
+**Load data:**
+
+```{r}
+#install.packages('printr')
+#install.packages('xtable')
+require('printr')
+require('xtable')
+#download.file('https://mmmlab.org/courses/psych400/data/mlb11.RData',
+#              destfile='~/R/data/mlb11.RData')
+#load("~/R/data/mlb11.RData")
+
+#download.file('https://mmmlab.org/courses/psych400/data/mlb11.RData',
+#              destfile='C:/Users/colm_/R/data/mlb11.RData')
+load("C:/Users/colm_/R/data/mlb11.RData")
+```
+
+
+#### Exercise 1:
+
+In order to display the relationship between two numerical values (at_bats and runs), I would use a scatterplot. In the plot below, I observed a mild positive linear relationship. In the abscence of more highly correlated variables, I would feel comfortable using a linear model to predict the number of runs. There is a linear correlation visible, so it is likely the model would provide some information about runs. Because the correlation appears not to be incredibily strong, I would prefer to find a variable with a stronger correlation.
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+# use scatterplot
+plot(mlb11$at_bats, mlb11$runs)
+cor(mlb11$runs, mlb11$at_bats)
+```
+
+#### Exercise 2:
+
+
+
+#### Exercise 3:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+plot_ss(x = mlb11$at_bats, y = mlb11$runs, showSquares = TRUE)
+
+```
+
+
+#### Exercise 4:
+
+- Estimate dived by standard error is the t value
+- larger t value means stronger predictor
+- r^2 tells you the same
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+m1 <- lm(runs ~ at_bats, data = mlb11)
+summary(m1)
+#xtable(summary(m1))
+
+m2 <- lm(runs ~ homeruns, data = mlb11)
+summary(m2)
+#xtable(summary(m2))
+```
+
+#### Exercise 5:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+plot(mlb11$runs ~ mlb11$at_bats)
+abline(m1)
+
+prediction = m1$coefficients[2]*5579+m1$coefficients[1]
+prediction
+
+# dont use this for lab, just for checking
+plot(m1)
+```
+
+#### Exercise 6:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 7:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 8:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 9:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 10:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+* * *
+
+### On your own:
+
+
+#### 1:
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### 2:
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### 3:
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### 4:
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### 5:
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+
+
