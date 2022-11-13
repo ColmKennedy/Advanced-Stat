@@ -15,17 +15,13 @@ require('printr')
 require('xtable')
 #download.file('https://mmmlab.org/courses/psych400/data/mlb11.RData',
 #              destfile='~/R/data/mlb11.RData')
-#load("~/R/data/mlb11.RData")
-
-#download.file('https://mmmlab.org/courses/psych400/data/mlb11.RData',
-#              destfile='C:/Users/colm_/R/data/mlb11.RData')
-load("C:/Users/colm_/R/data/mlb11.RData")
+load("~/R/data/mlb11.RData")
 ```
 
 
 #### Exercise 1:
 
-In order to display the relationship between two numerical values (at_bats and runs), I would use a scatterplot. In the plot below, I observed a mild positive linear relationship. In the abscence of more highly correlated variables, I would feel comfortable using a linear model to predict the number of runs. There is a linear correlation visible, so it is likely the model would provide some information about runs. Because the correlation appears not to be incredibily strong, I would prefer to find a variable with a stronger correlation.
+In order to display the relationship between two numerical values (at_bats and runs), I would use a scatterplot. In the plot below, I observed a mild positive linear relationship. In the absence of more highly correlated variables, I would feel comfortable using a linear model to predict the number of runs. There is a linear correlation visible, so it is likely the model would provide some information about runs. Because the correlation appears not to be incredibly strong, I would prefer to find a variable with a stronger correlation.
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
