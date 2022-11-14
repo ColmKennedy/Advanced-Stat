@@ -32,9 +32,11 @@ cor(mlb11$runs, mlb11$at_bats)
 
 #### Exercise 2:
 
-
+Runs and at_bats have a positive linear correlation. The correlation is 0.611, which is a moderately strong correlation. There is an unusual observation around 5500 at_bats, the matched number of runs is much higher than the rest of the data, at around 850 runs. We would expect somewhere in the region of 700 runs for an at_bats of 5500.
 
 #### Exercise 3:
+
+After running plot_ss several times, the best sum of squares I could obtain was 126024.3. My first try was 129803, then on my second try I got my best score. Each attempt beyond that was much higher, going as high as 187887.
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
