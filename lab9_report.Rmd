@@ -51,36 +51,57 @@ plot_ss(x = mlb11$at_bats, y = mlb11$runs, showSquares = TRUE)
 - larger t value means stronger predictor
 - r^2 tells you the same
 
+y_hat = 415.2389 + 1.8345 * homeruns
+
+The slope tells us how many more runs we expect from one additional home run. According to this model, for each home run, we expect a 1.8345 increase in total runs. This makes sense, because a home run guarantees at least one run, and our slope is greater than 1. I am not entirely sure on my knowledge of baseball, but I believe the maximum amount of runs possible from one home run is 4. Our slope is also less than 4. It is logical that a home run should increase total runs by 1.8345, because: 1 < 1.8345 < 4. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+# runs on at_bats
 m1 <- lm(runs ~ at_bats, data = mlb11)
-summary(m1)
-#xtable(summary(m1))
 
+# runs on homeruns
 m2 <- lm(runs ~ homeruns, data = mlb11)
 summary(m2)
-#xtable(summary(m2))
+xtable(summary(m2))
+
+# equation of regression line in the form of a function
+y_hat_homeruns <- function(homeruns){
+  # Takes number of homeruns, outputs expected number of runs
+  return(415.2389 + 1.8345 * homeruns)
+}
+
 ```
 
 #### Exercise 5:
+
+The team manager would expect 729 runs. This is an overestimate of 16 runs, the actual amount of runs for a team with 5579 at bats is 713. This also means the residual for this prediction is 16 runs. 
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
 plot(mlb11$runs ~ mlb11$at_bats)
 abline(m1)
 
+# using formula from class
 prediction = m1$coefficients[2]*5579+m1$coefficients[1]
 prediction
 
+mlb11$runs[mlb11$at_bats==5579]
+
 # dont use this for lab, just for checking
-plot(m1)
+#plot(m1)
 ```
 
 #### Exercise 6:
 
+The observed number of runs (713) for the team with 5579 at-bats falls in the percentile interval. In fact, it falls very close to the regression line.
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+plot_PI(mlb11$at_bats,mlb11$runs, 0.95)
+# adding a line at 5,579 at-bats and 713 runs to aid in visualization
+abline(v=5579, col='blue')
+abline(h = 713, col = 'blue')
 ```
 
 #### Exercise 7:
