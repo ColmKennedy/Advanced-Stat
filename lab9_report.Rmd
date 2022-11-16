@@ -62,7 +62,7 @@ m1 <- lm(runs ~ at_bats, data = mlb11)
 
 # runs on homeruns
 m2 <- lm(runs ~ homeruns, data = mlb11)
-summary(m2)
+#summary(m2)
 xtable(summary(m2))
 
 # equation of regression line in the form of a function
@@ -82,7 +82,7 @@ The team manager would expect 729 runs. This is an overestimate of 16 runs, the 
 plot(mlb11$runs ~ mlb11$at_bats)
 abline(m1)
 
-# using formula from class
+
 prediction = m1$coefficients[2]*5579+m1$coefficients[1]
 prediction
 
@@ -106,19 +106,29 @@ abline(h = 713, col = 'blue')
 
 #### Exercise 7:
 
+There are no apparent patterns in the variability. The residuals appear to be relatively evenly distributed and there is no clear cone shape or other recognizable pattern in deviation. There is still one outlier around 5525 at bats, which is a much higher residual than the rest. This tells us the relationship between runs and at-bats is linear. The residual has relatively equal variance, which provides evidence of a linear relationship.
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+plot(m1$residuals ~ mlb11$at_bats)
+abline(h = 0, lty = 3)  # adds a horizontal dashed line at y = 0
 ```
 
 #### Exercise 8:
 
+According to the plots, the approximately normal residuals condition appears  to be met. The histogram appears to have a mean close to 0, and the tails have a lower frequency, following a roughly bell-like shape. The qqplot provides a bit more information on the variance from normal. As expected, there is more variance from normal in the tails, but it is not extreme. There does appear to be somewhat of a stepwise pattern in the variance, where we can see several residual points in a horizonal line around -1, 0, and 1 on the x-axis. Because this stepwise pattern appears systematic, it is a point of concern, but I believe the residuals still follow the normal probability line closely enough to meet the approximately normal condition. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+hist(m1$residuals)
 
+qqnorm(m1$residuals)
+qqline(m1$residuals)
 ```
 
 #### Exercise 9:
+
+Based on the residual plot, constant variance appears to be met. There is no clear shape or pattern in the residual points.
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
@@ -127,9 +137,17 @@ abline(h = 713, col = 'blue')
 
 #### Exercise 10:
 
+The confidence interval is (0.00014, 1.26086)
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+# CI = b +/- t * (df) * SE
+xtable(summary(m1))
 
+lower <- 0.6305 - 4.08 * 0.1545
+upper <- 0.6305 + 4.08 * 0.1545
+lower
+upper
 ```
 * * *
 
@@ -137,33 +155,86 @@ abline(h = 713, col = 'blue')
 
 
 #### 1:
+
+At a glance, there appears to be a very strong linear relationship between bat_avg and runs. The correlation between batting average and runs is extremely high at: 0.81
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+# run on new_onbase
+plot(mlb11$bat_avg, mlb11$runs)
+m3 <- lm(runs~bat_avg, data = mlb11)
+cor(mlb11$runs,mlb11$bat_avg)
 ```
 
 #### 2:
+
+Comparing my model, runs on batting average, I received an r^2 of 0.6561, compared to 0.3729 from the runs on at-bat model. This is much higher, and means my model accounts for 65.61% of the variability in runs. This is a 28.32% increase in variability in runs explained by batting average. Based on this, my model is better at predicted runs than the previous model.
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+#summary(m1)
+#summary(m3)
+xtable(summary(m1))
+xtable(summary(m3))
 ```
 
 #### 3:
+
+After investigating the other five variables, my model (m3), runs on batting average, is the best model. With an r^2 of 0.6561, it has a higher r^2 than any other model with the traditional variables. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+names(mlb11)
+m4 <- lm(runs~hits, data = mlb11)
+m5 <- lm(runs~strikeouts, data = mlb11)
+m6 <- lm(runs~stolen_bases, data = mlb11)
+m7 <- lm(runs~wins, data = mlb11)
+
+# summary(m6)
+# summary(m2)
+# summary(m7)
+# summary(m4)
+# summary(m5)
+
+#summary(m3)
+xtable(summary(m3))
+
+plot_PI(mlb11$bat_avg,mlb11$runs, 0.95)
 
 ```
 
 #### 4:
+
+new_obs seems to be the best overall predictor of runs. On base slugging on runs has the best r^2 of any model, at 0.9349. This means on base slugging explains 93.49% of variability in runs. This is an increase of 27.88% from the best model I had found in the traditional variables, batting average. We can also see from the plot, the confidence interval is much tighter than the the CI was for batting average. This makes on base slugging the best predictor we have of runs. This makes sense, because OBS is the ability for a player to both get on base, and hit for power. This means the player is more likely to get themselves on base, and get the ball far enough away to allow others to make runs. A player with a high OBS would then be able to not only score themselves, but allow other players to score. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+names(mlb11)
+m8 <- lm(runs~new_onbase, data = mlb11)
+m9 <- lm(runs~new_slug, data = mlb11)
+m10 <- lm(runs~new_obs, data = mlb11)
+
+#summary(m8)
+#summary(m9)
+xtable(summary(m10))
+
+plot_PI(mlb11$new_obs,mlb11$runs, 0.95)
 
 ```
 
 #### 5:
+
+The model for runs on OBS seems homeostatic. The residual plot shows equal variance throughout every interval of obs. There are no clear patterns in the residual. The histogram of the residuals appears approximately normal, the mean appears to be close to 0, and the distribution appears close to bell-shaped. The qq plot also supports a normal distribution. The residuals follow the normal distribution line very closely. The residual plot also supports linearity, showing the residuals are mostly evenly distributed.  
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+plot(m10$residuals ~ mlb11$new_obs)
+abline(h = 0, lty = 3) 
 
+hist(m10$residuals)
+
+qqnorm(m10$residuals)
+qqline(m10$residuals)
 ```
 
 
