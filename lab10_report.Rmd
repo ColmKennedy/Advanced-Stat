@@ -3,7 +3,7 @@
 Lab 10
 ========================================================
 
-#### Author: (Enter author name here)
+#### Author: Colm Kennedy
 
 
 **Load data:**
@@ -23,14 +23,15 @@ load('data/evals.RData')
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+hist(evals$score)
+boxplot(evals$score)
 ```
 
 #### Exercise 3:
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+plot(jitter(evals$score)~jitter(evals$bty_avg))
 
 ```
 
@@ -39,6 +40,10 @@ load('data/evals.RData')
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+cor(evals$score, evals$bty_avg)
+m_bty <- lm(score~bty_avg, data = evals)
+summary(m_bty)
+
 
 ```
 
@@ -46,21 +51,27 @@ load('data/evals.RData')
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+plot(jitter(evals$score)~jitter(evals$bty_avg))
+abline(m_bty)
 ```
 
 #### Exercise 6:
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+plot(m_bty$residuals~evals$bty_avg, main='Residual Plot')
+qqnorm(m_bty$residuals)
+qqline(m_bty$residuals)
 ```
 
 #### Exercise 7:
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+pairs(evals[,13:19])
 
+m_bty_gen <- lm(score~bty_avg + gender, data =evals)
+summary(m_bty_gen)
 ```
 
 #### Exercise 8:
@@ -75,13 +86,21 @@ load('data/evals.RData')
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+multiLines(m_bty_gen)
 
+m_bty_rank <- lm(score~bty_avg + rank,data = evals)
+summary(m_bty_rank)
+multiLines(m_bty_rank)
 ```
 
 #### Exercise 11:
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+m_full <- lm(score ~ rank + ethnicity + gender + language + age + cls_perc_eval 
+             + cls_students + cls_level + cls_profs + cls_credits + bty_avg 
+             + pic_outfit + pic_color, data = evals)
+summary(m_full)
 
 ```
 
@@ -100,7 +119,17 @@ load('data/evals.RData')
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
+m_full_m1 <- lm(score ~ rank + ethnicity + gender + language + age + cls_perc_eval 
+             + cls_students + cls_level + cls_credits + bty_avg 
+             + pic_outfit + pic_color, data = evals)
+##summary(m_full_m1)
 
+m_full_m2 <- lm(score ~ rank + ethnicity + gender + language + age + cls_perc_eval 
+             + cls_students + cls_credits + bty_avg 
+             + pic_outfit + pic_color, data = evals)
+summary(m_full_m2)
+
+# do this until p value starts to rise, then go back
 ```
 
 #### Exercise 15:
