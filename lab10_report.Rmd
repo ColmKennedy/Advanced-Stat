@@ -1,0 +1,129 @@
+<!-- Instructions: This is the template you will use to type up your responses to the exercises and the on your own questions. To produce a document that you can print out and turn in just click on Knit HTML above. All you need to do to complete the lab is to type up your BRIEF answers and the R code (when necessary) in the spaces provided below. If you want to find out more about the markdown language click on the MD icon. -->
+
+Lab 10
+========================================================
+
+#### Author: (Enter author name here)
+
+
+**Load data:**
+
+```{r}
+download.file('https://mmmlab.org/courses/psych400/data/evals.RData',
+              destfile='~/R/data/evals.RData')
+load('data/evals.RData')
+```
+
+
+#### Exercise 1:
+
+
+
+#### Exercise 2:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 3:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+
+```
+
+
+#### Exercise 4:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 5:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 6:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 7:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 8:
+
+
+
+#### Exercise 9:
+
+
+
+#### Exercise 10:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 11:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 12:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 13:
+
+
+
+#### Exercise 14:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 15:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 16:
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+```
+
+#### Exercise 17:
+
+
+
+#### Exercise 18:
+
+
+
+#### Exercise 19:
+
