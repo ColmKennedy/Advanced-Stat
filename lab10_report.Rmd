@@ -21,22 +21,44 @@ This is an observational study. There is no independent variable present to be m
 
 #### Exercise 2:
 
+The distribution of score has a mean of 4.175, and a standard deviation of 0.544. The distribution appears to have left skew, this is confirmed by the median (4.3) being greater than the mean. Based on the left skew, students more frequently gave higher ratings. This is not what I expected to see. I assumed the score would be approximately normally distributed. I made this assumption, because I believed the scores would be more or less randomly distributed. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
 hist(evals$score)
 boxplot(evals$score)
+summary(evals$score)
+sd(evals$score)
 ```
 
 #### Exercise 3:
 
+The relationship between score and age appears to be a slight negative linear relationship. The correlation is -0.11. The boxplot shows native English speaking professors tend to receive higher evaluation scores than non native English speakers. The mean score of English speakers is higher, as well as the upper and lower quartiles There is more variance, and more outliers present in the English speaking group.
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-plot(jitter(evals$score)~jitter(evals$bty_avg))
+plot(jitter(evals$score)~jitter(evals$age))
+cor(evals$score,evals$age)
+boxplot(evals$score~evals$language)
 
 ```
 
 
 #### Exercise 4:
+
+The first scatterplot does not illustrate the density of points around the upper score and mid-beauty average range. It is misleading, because it gives the impression that the points are more evenly distributed. After adding jitter, we can see there is a much higher concentration of points in this area.
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+plot(evals$score ~ evals$bty_avg)
+
+plot(jitter(evals$score)~jitter(evals$bty_avg))
+
+```
+
+#### Exercise 5:
+
+The equation for the linear model is: y_hat = 3.88034 + 0.06664 * bty_avg. The slope represents that for every increase of 1 point in beauty score, we expect an increase of 0.06664 points in teaching score. Beauty average is a statistically significant predictor to the 99% confidence level, with a p value of 5.08e-05, which can be interpreted as 0. Although, beauty score does not seem to be a great practical predictor. The R-squared for this model is only 0.03502, meaning this model is using beauty score to account for only about 3.5% of variation in teaching score. There are likely more practical predictors. 
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
@@ -44,27 +66,25 @@ cor(evals$score, evals$bty_avg)
 m_bty <- lm(score~bty_avg, data = evals)
 summary(m_bty)
 
-
-```
-
-#### Exercise 5:
-
-<!--Insert any code that should be run in the console into the block below-->
-```{r}
 plot(jitter(evals$score)~jitter(evals$bty_avg))
 abline(m_bty)
 ```
 
 #### Exercise 6:
 
+The residual plot appears evenly distributed, there are no clear observable patterns. Using this we can verify that this model meets the equal variance assumption. This plot also shows us that the mean of the residual is apporximately 0, as the points appear evenly distributed around 0. The distribution is also approximately normal, the qq plot shows good adhearence to the line for the normal distribution. There is some variation around the tails, which is to be expected. There may be a small amount of skew based on the qq plot. The regression points curve downward, indicating skew, but it does not appear to be enough deviation from normal to violate the approximately normal assumption. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
 plot(m_bty$residuals~evals$bty_avg, main='Residual Plot')
 qqnorm(m_bty$residuals)
 qqline(m_bty$residuals)
+hist(m_bty$residuals)
 ```
 
 #### Exercise 7:
+
+The Residual plot shows resonably equal variance, the regression points seem evenly distributed. Although there seems to be a small amount of skew based on the downward curve in the qq plot, it does seem to reasonably follow the normal distribtution line. The mean of the residuals appears to be close to 0. According to these plots the model is reasonably close to the assumptions required for regression.
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
@@ -72,22 +92,27 @@ pairs(evals[,13:19])
 
 m_bty_gen <- lm(score~bty_avg + gender, data =evals)
 summary(m_bty_gen)
+
+plot(m_bty_gen$residuals~evals$bty_avg, main='Residual Plot')
+qqnorm(m_bty_gen$residuals)
+qqline(m_bty_gen$residuals)
+hist(m_bty_gen$residuals)
 ```
 
 #### Exercise 8:
 
-
+Beauty average is still a significant predictor of score, the p-value is 6.48e-06 which is well below 0.05. The addition of gender has changed the slope for beauty average, as it is now 0.07416, which is a larger slope than the prior model. 
 
 #### Exercise 9:
 
-
+The equation for the line coressponding to males is now score_hat = 3.74734 + 0.07416 * bty_avg + 0.17239 * 1. Where the one is the indicator variable indicating the person is male. With the same beauty rating, a male will typically have a higher teaching score, this is indicated by the male beta_hat_2 being a positive number. 
 
 #### Exercise 10:
 
+R will add an indicator variable for each level of the variable. Each level will have a coefficient which represents the change in y_hat for every increase of one unit in that level, with all other variables and levels taken into account. The first level is not shown, because that is the level which the other levels are being compared to, in this case bty_avg represents teaching.
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-multiLines(m_bty_gen)
-
 m_bty_rank <- lm(score~bty_avg + rank,data = evals)
 summary(m_bty_rank)
 multiLines(m_bty_rank)
@@ -95,64 +120,78 @@ multiLines(m_bty_rank)
 
 #### Exercise 11:
 
+I would expect pic_color to have the highest p-value. That is because students rarely even see the professors picture, so it should have no effect on the students rating, because they have not seen it.
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+
+
+```
+
+#### Exercise 12:
+
+My assumption was incorrect, the effect of the color of the professor's background has a p-value of 0.00252, which is far from the highest p-value. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
 m_full <- lm(score ~ rank + ethnicity + gender + language + age + cls_perc_eval 
              + cls_students + cls_level + cls_profs + cls_credits + bty_avg 
              + pic_outfit + pic_color, data = evals)
 summary(m_full)
-
-```
-
-#### Exercise 12:
-
-<!--Insert any code that should be run in the console into the block below-->
-```{r}
-
 ```
 
 #### Exercise 13:
 
-
+The coefficient of the minority variable represents that if all other variables are held constant, a non-minority professor should have an increase of 0.1234929 point in teaching score. Although, the p-value does not meet the 95% confidence level (0.11698).
 
 #### Exercise 14:
+
+Yes, the coefficients and significance of all the other variables changed. If the variables did not change that would indicate the variable we dropped was highly collinear with the other variables. 
 
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
 m_full_m1 <- lm(score ~ rank + ethnicity + gender + language + age + cls_perc_eval 
              + cls_students + cls_level + cls_credits + bty_avg 
              + pic_outfit + pic_color, data = evals)
-##summary(m_full_m1)
+summary(m_full_m1)
 
-m_full_m2 <- lm(score ~ rank + ethnicity + gender + language + age + cls_perc_eval 
-             + cls_students + cls_credits + bty_avg 
+
+```
+
+#### Exercise 15:
+
+score_hat = 3.907030 + 0.163818 * ethnicitynot minority + 0.202597 * gendermale - 0.246683 * languagenon-english - 0.006925* age + 0.004942 * cls_perc_eval +0.517205 * cls_creditsone credit + 0.046732 * bty_avg - 0.113939 * pic_outfitnot formal - 0.180870 * pic_color_color All categorial variables are represented by indicator variables, where if the variable is true the value is 1, if not it is 0. 
+
+<!--Insert any code that should be run in the console into the block below-->
+```{r}
+m_full_m2 <- lm(score ~ ethnicity + gender + language + age + cls_perc_eval 
+              + cls_credits + bty_avg 
              + pic_outfit + pic_color, data = evals)
 summary(m_full_m2)
 
 # do this until p value starts to rise, then go back
 ```
 
-#### Exercise 15:
-
-<!--Insert any code that should be run in the console into the block below-->
-```{r}
-
-```
-
 #### Exercise 16:
 
+The conditions for this model are resonable. The residual plot displays relatively equal variance, with a mean of 0 residual. The qq plot shows reasonable adhearance to a normal distribution, with an acceptable amount of varaition in the tails. The histogram of the residual appears normal, although it has some left skew, it is reasonably small. 
+
 <!--Insert any code that should be run in the console into the block below-->
 ```{r}
-
+plot(m_full_m2$residuals~evals$bty_avg, main='Residual Plot')
+qqnorm(m_full_m2$residuals)
+qqline(m_full_m2$residuals)
+hist(m_full_m2$residuals)
 ```
 
 #### Exercise 17:
 
-
+The fact that each row represents a course can violate the independence assumption for regression. Because a professor can teach multiple courses, they can be evaluated multiple times. 
 
 #### Exercise 18:
 
-
+Based on this model a professor with a high teaching score would not be a minority, he would be a male, speak English, he would be young, most of his class would complete the evaluation, he would be teaching a one credit course, he would be attractive, dress formally, and his picture would be in black and white.
 
 #### Exercise 19:
 
+I would not be comfortable generalizing my conclusions to any university. These results come from one geographic location, which means politics and culture can skew the results. I would prefer data from different geographic areas to take into account with this data. It may be a good predictor of universities in Texas, but I do not believe it would be a great predictor of universities in New Jersey. 
