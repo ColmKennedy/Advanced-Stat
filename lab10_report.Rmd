@@ -11,13 +11,13 @@ Lab 10
 ```{r}
 download.file('https://mmmlab.org/courses/psych400/data/evals.RData',
               destfile='~/R/data/evals.RData')
-load('data/evals.RData')
+load('~/R/data/evals.RData')
 ```
 
 
 #### Exercise 1:
 
-
+This is an observational study. There is no independent variable present to be manipulated. The original research question, whether beauty leads to differences in course evaluations, cannot be answered with an observational study. That is because this question implies causation. An observational study cannot prove causation. In order to use this observational study, we can rephrase the question to: do professors ranked higher in beauty have the same teaching scores as professors ranked lower in beauty? This phrasing is important because it does not imply causation, it simply allows us to evaluate an observed difference in teaching scores.
 
 #### Exercise 2:
 
